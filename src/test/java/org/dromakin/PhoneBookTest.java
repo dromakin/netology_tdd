@@ -4,9 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PhoneBookTest {
 
@@ -47,5 +45,20 @@ class PhoneBookTest {
                     phoneBook.add("+09539655123", "John");
                 }
         );
+    }
+
+    @Test
+    void findByNumber() {
+        PhoneBook phoneBook = new PhoneBook();
+        int count = phoneBook.add("John", "+09539655123");
+        Object object = phoneBook.findByNumber("+09539655123");
+        assertNotNull(object);
+    }
+
+    @Test
+    void findByNumberNull() {
+        PhoneBook phoneBook = new PhoneBook();
+        Object object = phoneBook.findByNumber("+09539655123");
+        assertNull(object);
     }
 }

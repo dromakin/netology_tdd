@@ -34,4 +34,9 @@ public class PhoneBook {
 
         return ++countContacts;
     }
+
+
+    public Object findByNumber(String number) {
+        return null;
+    }
 }
