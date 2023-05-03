@@ -13,13 +13,14 @@
 package org.dromakin;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PhoneBook {
 
     private int countContacts;
 
-    private final Map<String, Contact> contactsByNumber; // one to one
-    private final Map<String, Set<Contact>> contactsByName; // one to many
+    private final Map<String, Contact> contactsByNumber; // one to one (number -> Contacts)
+    private final Map<String, List<Contact>> contactsByName; // one to many (name -> list of Contacts)
 
     public PhoneBook() {
         countContacts = 0;
@@ -42,9 +43,9 @@ public class PhoneBook {
         if (contactsByName.containsKey(name)) {
             contactsByName.get(name).add(new Contact(name, number));
         } else {
-            Set<Contact> setContacts = new HashSet<>();
-            setContacts.add(new Contact(name, number));
-            contactsByName.put(name, setContacts);
+            List<Contact> listContacts = new ArrayList<>();
+            listContacts.add(new Contact(name, number));
+            contactsByName.put(name, listContacts);
         }
 
         return ++countContacts;
@@ -59,7 +60,7 @@ public class PhoneBook {
         }
     }
 
-    public Set<Contact> findByName(String name) {
+    public List<Contact> findByName(String name) {
         if (name.matches("[a-zA-Z]+")) {
             return contactsByName.get(name);
         } else {
@@ -68,7 +69,9 @@ public class PhoneBook {
     }
 
     public void printAllNames() {
-        System.out.println();
+        final Set<String> nameSorted = new TreeSet<>(String::compareTo);
+        nameSorted.addAll(contactsByNumber.values().stream().map(Contact::getName).collect(Collectors.toSet()));
+        nameSorted.forEach(System.out::println);
     }
 
 }

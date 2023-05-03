@@ -52,4 +52,12 @@ public class Contact {
     public int hashCode() {
         return Objects.hash(name, number);
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                '}';
+    }
 }

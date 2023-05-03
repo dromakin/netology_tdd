@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Set;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,7 +81,7 @@ class PhoneBookTest {
         PhoneBook phoneBook = new PhoneBook();
         phoneBook.add("John", "+09539655123");
         phoneBook.add("John", "+09523655954");
-        Set<Contact> contacts = phoneBook.findByName("John");
+        List<Contact> contacts = phoneBook.findByName("John");
         assertNotNull(contacts);
         assertEquals(contacts.size(), 2);
     }
@@ -89,7 +89,7 @@ class PhoneBookTest {
     @Test
     void findByNameNull() {
         PhoneBook phoneBook = new PhoneBook();
-        Set<Contact> contacts = phoneBook.findByName("John");
+        List<Contact> contacts = phoneBook.findByName("John");
         assertNull(contacts);
     }
 
@@ -98,6 +98,15 @@ class PhoneBookTest {
         PhoneBook phoneBook = new PhoneBook();
         phoneBook.add("John", "+09539655123");
         phoneBook.printAllNames();
-        assertEquals(new Contact("John", "+09539655123").toString(), outContent.toString());
+        assertEquals("John\n", outContent.toString());
+    }
+
+    @Test
+    void printAllNamesMultiLine() {
+        PhoneBook phoneBook = new PhoneBook();
+        phoneBook.add("John", "+09539655123");
+        phoneBook.add("John", "+09523655954");
+        phoneBook.printAllNames();
+        assertEquals("John\n", outContent.toString());
     }
 }
