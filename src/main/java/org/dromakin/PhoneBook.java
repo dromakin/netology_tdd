@@ -13,6 +13,7 @@
 package org.dromakin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PhoneBook {
@@ -49,4 +50,9 @@ public class PhoneBook {
             throw new IllegalArgumentException("Number is not name!");
         }
     }
+
+    public List<Contact> findByName(String name) {
+        return null;
+    }
+
 }
