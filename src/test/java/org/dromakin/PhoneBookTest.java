@@ -51,8 +51,8 @@ class PhoneBookTest {
     void findByNumber() {
         PhoneBook phoneBook = new PhoneBook();
         int count = phoneBook.add("John", "+09539655123");
-        Object object = phoneBook.findByNumber("+09539655123");
-        assertNotNull(object);
+        Contact contact = phoneBook.findByNumber("+09539655123");
+        assertNotNull(contact);
     }
 
     @Test
