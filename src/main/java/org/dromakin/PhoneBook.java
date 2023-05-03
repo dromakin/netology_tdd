@@ -12,19 +12,19 @@
  */
 package org.dromakin;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PhoneBook {
 
     private int countContacts;
 
-    private final Map<String, Contact> contactsByNumber;
+    private final Map<String, Contact> contactsByNumber; // one to one
+    private final Map<String, Set<Contact>> contactsByName; // one to many
 
     public PhoneBook() {
         countContacts = 0;
         contactsByNumber = new HashMap<>();
+        contactsByName = new HashMap<>();
     }
 
     public int add(String name, String number) {
@@ -39,6 +39,14 @@ public class PhoneBook {
         // save in db
         contactsByNumber.put(number, new Contact(name, number));
 
+        if (contactsByName.containsKey(name)) {
+            contactsByName.get(name).add(new Contact(name, number));
+        } else {
+            Set<Contact> setContacts = new HashSet<>();
+            setContacts.add(new Contact(name, number));
+            contactsByName.put(name, setContacts);
+        }
+
         return ++countContacts;
     }
 
@@ -51,8 +59,12 @@ public class PhoneBook {
         }
     }
 
-    public List<Contact> findByName(String name) {
-        return null;
+    public Set<Contact> findByName(String name) {
+        if (name.matches("[a-zA-Z]+")) {
+            return contactsByName.get(name);
+        } else {
+            throw new IllegalArgumentException("Number is not name!");
+        }
     }
 
 }

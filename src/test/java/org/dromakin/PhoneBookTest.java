@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,8 +21,9 @@ class PhoneBookTest {
     @Test
     void add() {
         PhoneBook phoneBook = new PhoneBook();
-        int count = phoneBook.add("John", "+09539655123");
-        assertEquals(count, 1);
+        phoneBook.add("John", "+09539655123");
+        int count = phoneBook.add("John", "+09523655954");
+        assertEquals(count, 2);
     }
 
     @Test
@@ -69,7 +70,7 @@ class PhoneBookTest {
         PhoneBook phoneBook = new PhoneBook();
         phoneBook.add("John", "+09539655123");
         phoneBook.add("John", "+09523655954");
-        List<Contact> contacts = phoneBook.findByName("John");
+        Set<Contact> contacts = phoneBook.findByName("John");
         assertNotNull(contacts);
         assertEquals(contacts.size(), 2);
     }
@@ -77,7 +78,7 @@ class PhoneBookTest {
     @Test
     void findByNameNull() {
         PhoneBook phoneBook = new PhoneBook();
-        List<Contact> contacts = phoneBook.findByName("John");
-        assertEquals(contacts.size(), 0);
+        Set<Contact> contacts = phoneBook.findByName("John");
+        assertNull(contacts);
     }
 }
