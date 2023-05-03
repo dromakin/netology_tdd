@@ -4,18 +4,29 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PhoneBookTest {
 
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    private final PrintStream originalErr = System.err;
+
     @BeforeEach
     void setUp() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
     }
 
     @AfterEach
     void tearDown() {
+        System.setOut(originalOut);
+        System.setErr(originalErr);
     }
 
     @Test
@@ -80,5 +91,13 @@ class PhoneBookTest {
         PhoneBook phoneBook = new PhoneBook();
         Set<Contact> contacts = phoneBook.findByName("John");
         assertNull(contacts);
+    }
+
+    @Test
+    void printAllNames() {
+        PhoneBook phoneBook = new PhoneBook();
+        phoneBook.add("John", "+09539655123");
+        phoneBook.printAllNames();
+        assertEquals(new Contact("John", "+09539655123").toString(), outContent.toString());
     }
 }
